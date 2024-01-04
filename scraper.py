@@ -11,9 +11,8 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger()
 
-base_url = 'https://www.sorell.tas.gov.au/currently-advertised-planning-applications/'
-public_notices_url = base_url + '?r=P1.LCC.WEBGUEST&f=%24P1.ESB.PUBNOTAL.ENQ'
-public_notice_details_url = base_url + '?r=P1.LCC.WEBGUEST&f=%24P1.ESB.PUBNOT.VIW&ApplicationId='
+base_url = 'https://www.sorell.tas.gov.au/'
+public_notices_url = base_url + 'currently-advertised-planning-applications/'
 page = BeautifulSoup(scraperwiki.scrape(https://www.sorell.tas.gov.au/currently-advertised-planning-applications/), 'html.parser')
 
 records = []
@@ -33,7 +32,7 @@ for table in page.find_all('table', class_='grid'):
         elif header == 'Application Description':
             record['Description'] = element.get_text()
         elif header == 'Property Address':
-            record['address'] = re.sub(r'\sTAS\s+(7\d{3})$', r', TAS, \1', element.get_text())
+            record['Address'] = re.sub(r'\sTAS\s+(7\d{3})$', r', TAS, \1', element.get_text())
 
     records.append(record)
 
